@@ -2,15 +2,6 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useStockBajo } from '../src/hooks/useStockBajo';
 import { useConfiguracionStore } from '../src/store/configuracion.store';
 
-/**
- * Pantalla placeholder — Equipo 1 (Arquitectura)
- * 
- * Esta pantalla es TEMPORAL. Será reemplazada por los equipos de UI
- * cuando entreguen sus pantallas de negocio.
- * 
- * Su único propósito es que Expo Router tenga una ruta válida
- * y verificar que la infraestructura funciona correctamente.
- */
 export default function HomeScreen() {
   const nombreTienda = useConfiguracionStore((s) => s.get('nombre_tienda'));
   const moneda = useConfiguracionStore((s) => s.get('moneda'));
