@@ -5,8 +5,6 @@ import { useDatabase } from '../src/hooks/useDatabase';
 /**
  * Layout raíz de la aplicación.
  * Inicializa la base de datos antes de renderizar cualquier pantalla.
- * Los equipos de UI pueden reemplazar las pantallas de loading/error
- * por componentes más elaborados.
  */
 export default function RootLayout() {
   const { ready, error } = useDatabase();
