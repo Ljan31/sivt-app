@@ -1,24 +1,59 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Slot } from 'expo-router';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { useDatabase } from '../src/hooks/useDatabase';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-
+/**
+ * Layout raíz de la aplicación.
+ * Inicializa la base de datos antes de renderizar cualquier pantalla.
+ * Los equipos de UI pueden reemplazar las pantallas de loading/error
+ * por componentes más elaborados.
+ */
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const { ready, error } = useDatabase();
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.errorTitle}>Error al iniciar</Text>
+        <Text style={styles.errorMessage}>{error}</Text>
+      </View>
+    );
+  }
+
+  if (!ready) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#2563EB" />
+        <Text style={styles.loadingText}>Iniciando inventario...</Text>
+      </View>
+    );
+  }
+
+  return <Slot />;
 }
+
+const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F8FAFC',
+    gap: 12,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#64748B',
+    marginTop: 8,
+  },
+  errorTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#DC2626',
+  },
+  errorMessage: {
+    fontSize: 14,
+    color: '#64748B',
+    textAlign: 'center',
+    paddingHorizontal: 32,
+  },
+});
