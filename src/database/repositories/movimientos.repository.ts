@@ -1,13 +1,13 @@
-import { BaseRepository } from './base.repository';
-import { getDatabase } from '../db';
-import { productosRepository } from './productos.repository';
 import type {
   MovimientoStock,
   MovimientoStockInput,
-  TipoMovimiento,
-  RepositoryResult,
   RepositoryListResult,
+  RepositoryResult,
+  TipoMovimiento,
 } from '../../types';
+import { getDatabase } from '../db';
+import { BaseRepository } from './base.repository';
+import { productosRepository } from './productos.repository';
 
 class MovimientosStockRepository extends BaseRepository<
   MovimientoStock,

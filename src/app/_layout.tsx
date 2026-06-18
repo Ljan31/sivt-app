@@ -1,6 +1,6 @@
 import { Slot } from 'expo-router';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { useDatabase } from '../src/hooks/useDatabase';
+import { useDatabase } from '../hooks/useDatabase';
 
 /**
  * Layout raíz de la aplicación.

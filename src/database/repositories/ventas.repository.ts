@@ -1,15 +1,15 @@
-import { BaseRepository } from './base.repository';
-import { getDatabase } from '../db';
-import { productosRepository } from './productos.repository';
 import type {
-  Venta,
-  VentaInput,
   DetalleVenta,
   DetalleVentaInput,
-  VentaConDetalles,
-  RepositoryResult,
   RepositoryListResult,
+  RepositoryResult,
+  Venta,
+  VentaConDetalles,
+  VentaInput,
 } from '../../types';
+import { getDatabase } from '../db';
+import { BaseRepository } from './base.repository';
+import { productosRepository } from './productos.repository';
 
 class DetalleVentasRepository extends BaseRepository<DetalleVenta, DetalleVentaInput> {
   protected tableName = 'detalle_ventas';
@@ -172,3 +172,4 @@ class VentasRepository extends BaseRepository<Venta, VentaInput> {
 
 export const ventasRepository = new VentasRepository();
 export { detalleVentasRepository };
+

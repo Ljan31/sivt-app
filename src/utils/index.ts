@@ -1,4 +1,3 @@
-import type { CategoriaProducto, UnidadMedida } from '../types';
 
 // ─────────────────────────────────────────────
 // Formateo de moneda
@@ -77,29 +76,17 @@ export function validarCodigoProducto(codigo: string): boolean {
 // Constantes de dominio
 // ─────────────────────────────────────────────
 
-export const CATEGORIAS: CategoriaProducto[] = [
-  'Bebidas',
-  'Cervezas y tabaco',
-  'Limpieza',
-  'Higiene personal',
-  'Abarrotes',
-  'Conservas',
-  'Snacks',
-  'Lácteos',
-  'Café y bebidas calientes',
-  'Condimentos',
-  'Verduras',
-  'Otros',
+// CATEGORIAS y UNIDADES_MEDIDA ya no son listas fijas.
+// Vienen de la base de datos via useCategoriasStore y useUnidadesStore.
+// Se mantienen estas funciones por compatibilidad con código existente.
+
+export const CATEGORIAS: string[] = [
+  'Bebidas', 'Cervezas y tabaco', 'Limpieza', 'Higiene personal',
+  'Abarrotes', 'Conservas', 'Snacks', 'Lácteos',
+  'Café y bebidas calientes', 'Condimentos', 'Verduras', 'Otros',
 ];
 
-export const UNIDADES_MEDIDA: UnidadMedida[] = [
-  'Unidad',
-  'Paquete',
-  'Caja',
-  'Bolsa',
-  'Botella',
-  'Lata',
-  'Kilogramo',
-  'Gramo',
-  'Litro',
+export const UNIDADES_MEDIDA: string[] = [
+  'Unidad', 'Paquete', 'Caja', 'Bolsa',
+  'Botella', 'Lata', 'Kilogramo', 'Gramo', 'Litro',
 ];

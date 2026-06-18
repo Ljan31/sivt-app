@@ -1,15 +1,15 @@
-import { BaseRepository } from './base.repository';
-import { getDatabase } from '../db';
-import { productosRepository } from './productos.repository';
 import type {
   Compra,
+  CompraConDetalles,
   CompraInput,
   DetalleCompra,
   DetalleCompraInput,
-  CompraConDetalles,
-  RepositoryResult,
   RepositoryListResult,
+  RepositoryResult,
 } from '../../types';
+import { getDatabase } from '../db';
+import { BaseRepository } from './base.repository';
+import { productosRepository } from './productos.repository';
 
 class DetalleComprasRepository extends BaseRepository<
   DetalleCompra,
@@ -139,3 +139,4 @@ class ComprasRepository extends BaseRepository<Compra, CompraInput> {
 
 export const comprasRepository = new ComprasRepository();
 export { detalleComprasRepository };
+

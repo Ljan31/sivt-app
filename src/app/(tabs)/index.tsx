@@ -1,7 +1,7 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useStockBajo } from '../src/hooks/useStockBajo';
-import { useConfiguracionStore } from '../src/store/configuracion.store';
-
+import { router } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useStockBajo } from '../../hooks/useStockBajo';
+import { useConfiguracionStore } from '../../store/configuracion.store';
 export default function HomeScreen() {
   const nombreTienda = useConfiguracionStore((s) => s.get('nombre_tienda'));
   const moneda = useConfiguracionStore((s) => s.get('moneda'));
@@ -37,6 +37,12 @@ export default function HomeScreen() {
           Los equipos de UI reemplazarán este archivo.
         </Text>
       </View>
+      <Pressable
+        style={styles.button}
+        onPress={() => router.push('/(tabs)/productos')}
+      >
+        <Text style={styles.buttonText}>Ver Productos</Text>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -100,4 +106,16 @@ const styles = StyleSheet.create({
     borderLeftColor: '#EAB308',
   },
   noteText: { fontSize: 13, color: '#854D0E', lineHeight: 20 },
+  button: {
+    backgroundColor: '#2563EB',
+    padding: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  buttonText: {
+    color: '#FFF',
+    fontWeight: '600',
+    fontSize: 16,
+  },
 });

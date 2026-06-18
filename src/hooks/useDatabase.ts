@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { initializeDatabase } from '../services/database.service';
+import { useCategoriasStore, useUnidadesStore } from '../store/catalogo.store';
 import { useConfiguracionStore } from '../store/configuracion.store';
 
 interface UseDatabaseResult {
@@ -10,19 +11,13 @@ interface UseDatabaseResult {
 /**
  * Hook que inicializa la base de datos y carga la configuración inicial.
  * Debe usarse en el componente raíz de la app (_layout.tsx).
- *
- * @example
- * function RootLayout() {
- *   const { ready, error } = useDatabase();
- *   if (!ready) return <SplashScreen />;
- *   if (error) return <ErrorScreen message={error} />;
- *   return <Slot />;
- * }
  */
 export function useDatabase(): UseDatabaseResult {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const cargarConfiguracion = useConfiguracionStore((s) => s.cargar);
+  const cargarCategorias = useCategoriasStore((s) => s.cargar);
+  const cargarUnidades = useUnidadesStore((s) => s.cargar);
 
   useEffect(() => {
     let cancelled = false;
@@ -30,7 +25,12 @@ export function useDatabase(): UseDatabaseResult {
     async function init() {
       try {
         await initializeDatabase();
-        await cargarConfiguracion();
+        // Cargar catálogos en paralelo para mayor velocidad
+        await Promise.all([
+          cargarConfiguracion(),
+          cargarCategorias(),
+          cargarUnidades(),
+        ]);
         if (!cancelled) setReady(true);
       } catch (e) {
         if (!cancelled) setError(String(e));

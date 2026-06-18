@@ -1,5 +1,5 @@
-import { getDatabase } from '../db';
 import type { ConfiguracionItem } from '../../types';
+import { getDatabase } from '../db';
 
 // Claves tipadas para mayor seguridad
 export type ConfiguracionClave =

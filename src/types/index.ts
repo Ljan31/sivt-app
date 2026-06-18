@@ -2,32 +2,34 @@
 // Enums
 // ─────────────────────────────────────────────
 
-export type UnidadMedida =
-  | 'Unidad'
-  | 'Paquete'
-  | 'Caja'
-  | 'Bolsa'
-  | 'Botella'
-  | 'Lata'
-  | 'Kilogramo'
-  | 'Gramo'
-  | 'Litro';
+// Ahora son strings dinámicos: los valores vienen de las tablas
+// `categorias` y `unidades_medida` en SQLite (CRUD completo).
+export type CategoriaProducto = string;
+export type UnidadMedida = string;
 
 export type TipoMovimiento = 'Entrada' | 'Venta' | 'Ajuste' | 'Merma';
 
-export type CategoriaProducto =
-  | 'Bebidas'
-  | 'Cervezas y tabaco'
-  | 'Limpieza'
-  | 'Higiene personal'
-  | 'Abarrotes'
-  | 'Conservas'
-  | 'Snacks'
-  | 'Lácteos'
-  | 'Café y bebidas calientes'
-  | 'Condimentos'
-  | 'Verduras'
-  | 'Otros';
+// ─────────────────────────────────────────────
+// Categorías (tabla dinámica)
+// ─────────────────────────────────────────────
+export interface Categoria {
+  id: number;
+  nombre: string;
+  icono: string | null;
+  orden: number;
+}
+export type CategoriaInput = Omit<Categoria, 'id'>;
+
+// ─────────────────────────────────────────────
+// Unidades de Medida (tabla dinámica)
+// ─────────────────────────────────────────────
+export interface UnidadMedidaItem {
+  id: number;
+  nombre: string;
+  icono: string | null;
+  abreviatura: string | null;
+}
+export type UnidadMedidaInput = Omit<UnidadMedidaItem, 'id'>;
 
 // ─────────────────────────────────────────────
 // Productos
@@ -43,6 +45,7 @@ export interface Producto {
   precio_compra: number;
   margen_ganancia: number;
   precio_venta: number;
+  precio_venta_manual: number; // 1 = precio editado manualmente, 0 = calculado por fórmula
   stock: number;
   stock_minimo: number;
   imagen_path: string | null;

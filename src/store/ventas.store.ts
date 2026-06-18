@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { ventasRepository } from '../database/repositories/ventas.repository';
-import type { VentaConDetalles, Producto } from '../types';
+import type { Producto, VentaConDetalles } from '../types';
 
 export interface ItemCarritoVenta {
   producto_id: number;

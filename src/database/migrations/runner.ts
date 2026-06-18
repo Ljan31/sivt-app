@@ -1,5 +1,6 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
 import { migration_001_initial } from './001_initial';
+import { migration_002_categorias_unidades } from './002_categorias_unidades';
 
 interface Migration {
   version: number;
@@ -7,7 +8,10 @@ interface Migration {
 }
 
 // Registrar aquí todas las migraciones en orden
-const ALL_MIGRATIONS: Migration[] = [migration_001_initial];
+const ALL_MIGRATIONS: Migration[] = [
+  migration_001_initial,
+  migration_002_categorias_unidades,
+];
 
 async function getCurrentVersion(db: SQLiteDatabase): Promise<number> {
   try {

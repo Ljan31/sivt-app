@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { productosRepository } from '../database/repositories/productos.repository';
-import type { Producto, ProductoInput, CategoriaProducto } from '../types';
+import type { CategoriaProducto, Producto, ProductoInput } from '../types';
 
 interface ProductosState {
   productos: Producto[];
@@ -8,7 +8,6 @@ interface ProductosState {
   loading: boolean;
   error: string | null;
 
-  // Acciones
   cargarProductos: () => Promise<void>;
   cargarPorCategoria: (categoria: CategoriaProducto) => Promise<void>;
   buscarProductos: (query: string) => Promise<void>;
@@ -16,6 +15,11 @@ interface ProductosState {
   actualizarProducto: (id: number, changes: Partial<ProductoInput>) => Promise<Producto | null>;
   eliminarProducto: (id: number) => Promise<boolean>;
   seleccionarProducto: (producto: Producto | null) => void;
+
+  // Precio de venta manual
+  setPrecioVentaManual: (id: number, precio: number) => Promise<Producto | null>;
+  restaurarPrecioVenta: (id: number) => Promise<Producto | null>;
+
   limpiarError: () => void;
 }
 
@@ -38,9 +42,7 @@ export const useProductosStore = create<ProductosState>((set, get) => ({
   },
 
   buscarProductos: async (query) => {
-    if (!query.trim()) {
-      return get().cargarProductos();
-    }
+    if (!query.trim()) return get().cargarProductos();
     set({ loading: true, error: null });
     const { data, error } = await productosRepository.search(query);
     set({ productos: data, loading: false, error });
@@ -88,6 +90,36 @@ export const useProductosStore = create<ProductosState>((set, get) => ({
   },
 
   seleccionarProducto: (producto) => set({ productoSeleccionado: producto }),
+
+  setPrecioVentaManual: async (id, precio) => {
+    set({ loading: true, error: null });
+    const { data, error } = await productosRepository.setPrecioVentaManual(id, precio);
+    if (data) {
+      set((state) => ({
+        productos: state.productos.map((p) => (p.id === id ? data : p)),
+        productoSeleccionado: state.productoSeleccionado?.id === id ? data : state.productoSeleccionado,
+        loading: false,
+      }));
+    } else {
+      set({ loading: false, error });
+    }
+    return data;
+  },
+
+  restaurarPrecioVenta: async (id) => {
+    set({ loading: true, error: null });
+    const { data, error } = await productosRepository.restaurarPrecioVentaAutomatico(id);
+    if (data) {
+      set((state) => ({
+        productos: state.productos.map((p) => (p.id === id ? data : p)),
+        productoSeleccionado: state.productoSeleccionado?.id === id ? data : state.productoSeleccionado,
+        loading: false,
+      }));
+    } else {
+      set({ loading: false, error });
+    }
+    return data;
+  },
 
   limpiarError: () => set({ error: null }),
 }));

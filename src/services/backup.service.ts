@@ -85,7 +85,7 @@ export async function compartirRespaldo(rutaRespaldo: string): Promise<void> {
  * Lista todos los respaldos disponibles en el directorio local.
  */
 export async function listarRespaldos(): Promise<
-  Array<{ nombre: string; ruta: string; fecha: Date }>
+  { nombre: string; ruta: string; fecha: Date }[]
 > {
   try {
     await ensureBackupDir();

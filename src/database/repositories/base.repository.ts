@@ -1,8 +1,11 @@
-import { getDatabase } from '../db';
 import type {
-  RepositoryResult,
   RepositoryListResult,
+  RepositoryResult,
 } from '../../types';
+import { getDatabase } from '../db';
+
+// Fix: re-export SQLite namespace for binding values used above
+import * as SQLite from 'expo-sqlite';
 
 /**
  * BaseRepository provee operaciones CRUD genéricas.
@@ -156,6 +159,3 @@ export abstract class BaseRepository<T extends { id: number }, TInput> {
     }
   }
 }
-
-// Fix: re-export SQLite namespace for binding values used above
-import * as SQLite from 'expo-sqlite';

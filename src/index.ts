@@ -1,26 +1,29 @@
 // ─── Base de datos ───────────────────────────
-export { initDatabase, getDatabase, closeDatabase } from './database/db';
+export { closeDatabase, getDatabase, initDatabase } from './database/db';
 
 // ─── Migraciones ─────────────────────────────
 export { runMigrations } from './database/migrations/runner';
 
 // ─── Repositorios ────────────────────────────
-export { productosRepository, calcularPrecioVenta } from './database/repositories/productos.repository';
+export { categoriasRepository } from './database/repositories/categorias.repository';
 export { comprasRepository } from './database/repositories/compras.repository';
-export { ventasRepository } from './database/repositories/ventas.repository';
-export { movimientosStockRepository } from './database/repositories/movimientos.repository';
 export { configuracionRepository } from './database/repositories/configuracion.repository';
+export { movimientosStockRepository } from './database/repositories/movimientos.repository';
+export { calcularPrecioVenta, productosRepository } from './database/repositories/productos.repository';
+export { unidadesMedidaRepository } from './database/repositories/unidades.repository';
+export { ventasRepository } from './database/repositories/ventas.repository';
 
 // ─── Servicios ───────────────────────────────
+export * from './services/backup.service';
 export { initializeDatabase } from './services/database.service';
 export * from './services/image.service';
-export * from './services/backup.service';
 
 // ─── Stores ──────────────────────────────────
-export { useProductosStore } from './store/productos.store';
+export { useCategoriasStore, useUnidadesStore } from './store/catalogo.store';
 export { useComprasStore } from './store/compras.store';
-export { useVentasStore } from './store/ventas.store';
 export { useConfiguracionStore } from './store/configuracion.store';
+export { useProductosStore } from './store/productos.store';
+export { useVentasStore } from './store/ventas.store';
 
 // ─── Hooks ───────────────────────────────────
 export { useDatabase } from './hooks/useDatabase';
@@ -31,3 +34,4 @@ export * from './utils/index';
 
 // ─── Tipos ───────────────────────────────────
 export type * from './types/index';
+

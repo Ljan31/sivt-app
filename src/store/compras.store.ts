@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { comprasRepository } from '../database/repositories/compras.repository';
 import type { CompraConDetalles, CompraInput } from '../types';
-import type { ItemVenta } from '../database/repositories/ventas.repository';
 
 // Ítem en el carrito de compra (antes de confirmar)
 export interface ItemCarritoCompra {
